@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>全选和全不选</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            list-style: none;
+            text-decoration: none;
+            box-sizing: border-box
+        }
+        
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+        
+        .wrapper {
+            height: 400px;
+            width: 500px;
+            margin: 0 100px;
+        }
+        
+        li,
+        p {
+            height: 30px;
+            line-height: 30px;
+            display: flex;
+        }
+        
+        .wrapper .check {
+            height: 20px;
+            width: 20px;
+            margin: 5px 10px;
+            background: #ccc
+        }
+        
+        .wrapper .active {
+            background: red;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h2>请选择：</h2>
+        <ul>
+            <li v-for="(val,index) in list" :key="index">
+                <span :class="['check',{'active':val.flag}]" @click="checkFn(val)"></span>
+                <span>{{val.name}}</span>
+            </li>
+        </ul>
+        <p><span :class="['check',{'active':allFlag}]" @click="allFn()"></span><span>全选</span></p>
+        <p>您的选择有：{{likeList}}</p>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.10/dist/vue.js"></script>
+    <script>
+        new Vue({
+            el: ".wrapper",
+            data: {
+                allFlag: false,
+                list: [{
+                    name: "张三",
+                    flag: false
+                }, {
+                    name: "李四",
+                    flag: false
+                }, {
+                    name: "王五",
+                    flag: false
+                }, {
+                    name: "马六",
+                    flag: false
+                }],
+                numList: [{
+                    name: "张三",
+                    flag: false
+                }, {
+                    name: "李四",
+                    flag: false
+                }, {
+                    name: "王五",
+                    flag: false
+                }, {
+                    name: "马六",
+                    flag: false
+                }]
+            },
+            computed: {
+                likeList() {
+                    return this.list.filter(val => val.flag).map(item => item.name).join("、")
+                }
+            },
+            methods: {
+                checkFn(val) {
+                    val.flag = !val.flag;
+                    this.allFlag = this.list.every(item => item.flag)
+                },
+                allFn() {
+                    this.allFlag = !this.allFlag
+                    this.list.map(item => item.flag = this.allFlag)
+                }
+            }
+        })
+    </script>
+</body>
+
+</html>
