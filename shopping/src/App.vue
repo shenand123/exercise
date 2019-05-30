@@ -3,22 +3,20 @@
     <div class="main">
       <ul>
         <li v-for="(val,index) in list" :key="index">
-          <Item :data="val" @add="add"/>
+          <Item :data="val" @add="add" @del="del"/>
         </li>
       </ul>
     </div>
     <div class="footer">
-      {{countAll}}
-      {{priceAll}}
-      <Footer :options="count" :pirces="pirce"/>
+      <span>总件数：{{countAll}}</span>
+      <span>总价：{{priceAll}}</span>
     </div>
   </div>
 </template>
 
 <script>
-import axios from "axios"
-import Footer from "./components/footers"
 import Item from "./components/item"
+import axios from "axios"
 export default {
   name: 'App',
   data(){
@@ -30,14 +28,14 @@ export default {
     } 
   },
   components: {
-    Footer,Item
+   Item
   },
   computed:{
       countAll(){
-       this.count=this.list.filter(val=>val.count>0).reduce((num,next)=>num+next.count,0)
+       return this.list.filter(val=>val.count>0).reduce((num,next)=>num+next.count,0)
       },
       priceAll(){
-        this.pirce=this.list.filter(val=>val.count>0).reduce((num,next)=>num+next.count*next.price,0).toFixed(2)
+        return this.list.filter(val=>val.count>0).reduce((num,next)=>num+next.count*next.price,0).toFixed(2)
       }
   },
   created(){
@@ -51,6 +49,14 @@ export default {
        this.arr.push(val)
       }
       val.count++;
+    },
+    del(val){
+      if(val.count>0){
+        if(!this.arr.includes(val)){
+        this.arr.push(val)
+        }
+        val.count--;
+      }
     }
   }
 }
@@ -84,5 +90,12 @@ export default {
   border-top: 1px solid #ccc;
   font-size: 20px;
   background: #eee;
+  padding: 0 10px;
+  display: flex;
+  justify-content: space-between;
+}
+.footer span{
+  width: 40%;
+  text-align: left
 }
 </style>

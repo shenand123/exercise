@@ -9,7 +9,7 @@
                 <div>
                     <b>￥:{{data.price}} </b>
                     <p>
-                        <span class="check">-</span>
+                        <span class="check"@click="del(data)">-</span>
                         <span>{{data.count}}</span>
                         <span class="check" @click="add(data)">+</span>
                     </p>
@@ -39,6 +39,9 @@ export default {
     methods:{
         add(val){
             this.$emit("add",val)
+        },
+        del(val){
+            this.$emit("del",val)
         }
     },
     created(){

@@ -1,11 +1,13 @@
 <template>
-    <div class="wrapper">
-        
+    <div>
+        搜索页
     </div>
 </template>
 <script>
 export default {
-    props:["options","pirces"],
+    props:{
+
+    },
     components:{
 
     },
@@ -29,5 +31,5 @@ export default {
 }
 </script>
 <style scoped lang="">
-    
+
 </style>
